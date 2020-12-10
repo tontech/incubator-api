@@ -1,0 +1,31 @@
+{
+	"ENVIRONMENT": "prod",
+	"CLOUDANT": {
+          "apikey": "SesBltaCUiQBTvPCr-g1DEcDU6tVq9nEFaICgH6zgr78",
+          "host": "3890d14c-b8f3-4a1d-bb6f-895c47c885e2-bluemix.cloudantnosqldb.appdomain.cloud",
+          "iam_apikey_description": "Auto-generated for key cf2480b1-7cf5-49cf-949a-d1592fdd40f7",
+          "iam_apikey_name": "Service credentials-1",
+          "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+          "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/340f5fd220a041409719d89bfa74bc35::serviceid:ServiceId-f358ebbd-d68a-42b4-921c-d3c586522d2d",
+          "password": "10cb5258e66e6d1e43075a9433c5251be15da86237deb204f51ee799a352a2bc",
+          "port": 443,
+          "url": "https://3890d14c-b8f3-4a1d-bb6f-895c47c885e2-bluemix:10cb5258e66e6d1e43075a9433c5251be15da86237deb204f51ee799a352a2bc@3890d14c-b8f3-4a1d-bb6f-895c47c885e2-bluemix.cloudantnosqldb.appdomain.cloud",
+          "username": "3890d14c-b8f3-4a1d-bb6f-895c47c885e2-bluemix"
+	},
+
+	"DATABASE": {
+		"dev": "incubator",
+		"prod": "incubator"
+	},
+
+	"AUTHORIZATION": {
+		"api_token": "!n^3beightHor"
+	},
+
+	"HASHING": {
+	  "AUTH_SIZE": 16,
+	  "SECRET_KEY": "!n^3be(secret)ightHor",
+	  "FERNET_KEY": "uCh5D8aVVJH6inn1-z7xi2EmvPmceVQTwf9egWkg9Zc="
+	}
+
+}
