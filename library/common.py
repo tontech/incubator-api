@@ -37,6 +37,13 @@ class Common:
     def getDTObject(self):
         return datetime.now()+td(hours=8)
 
+    def getEndDate(self, start_date_str, days=26):
+        return (datetime.strptime(start_date_str,"%Y-%m-%d %H:%M:%S")+td(days=days)).strftime("%Y-%m-%d %H:%M:%S")
+
+    def getDateDifference(self, date_x, date_y):
+        diff = self.str2DateTime(date_x) - self.str2DateTime(date_y)
+        return diff.days
+
     def blake2bHashing(self, str_ing):
         config = self.readJson("config")
         config_hash = config["HASHING"]

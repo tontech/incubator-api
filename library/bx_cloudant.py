@@ -54,12 +54,8 @@ class BxCloudant:
 
     def saveDocument(self, doc):
         global mydb
-        my_doc = mydb.create_document(doc)
-        if my_doc.exists():
-            return True
-        else:
-            return False
-
+        return mydb.create_document(doc)
+    
     def bulkDocuments(self,doc_list):
         global mydb
         save_doc = mydb.bulk_docs(doc_list)

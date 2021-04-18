@@ -16,4 +16,6 @@ Flask-JWT-Extended==3.18.1
 numpy==1.19.2
 urllib3
 idna==2.7
-paho-mqtt
+tinydb==4.3.0
+jsonmodels==2.4.1
+

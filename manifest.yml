@@ -1,0 +1,11 @@
+---
+language: python
+default_versions:
+- name: python
+  version: 3.8.5
+buildpacks: https://github.com/cloudfoundry/python-buildpack.git
+applications:
+ - name: incubator-server
+   random-route: true
+   memory: 256M
+   disk_quota: 1G
