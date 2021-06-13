@@ -4,9 +4,9 @@ from flask import Flask, jsonify, request
 from models.incubation import IncubationModel
 from library.common import Common
 from library.bx_cloudant import BxCloudant
+from library.ably_interface import AblyInterface 
 
-
-class Incubation(BxCloudant, Common):
+class Incubation(AblyInterface, BxCloudant, Common):
     
     def startIncubation(self):
         params = request.get_json(force=True)
@@ -31,9 +31,9 @@ class Incubation(BxCloudant, Common):
         incubation_id = "incubation-"+str(machine_id)
 
         machine_settings = self.getDocumentById("machinesettings-"+machine_id)
-        incubation_days = 26
-        if machine_settings and machine_settings.get("value",False):
-            incubation_days = machine_settings["value"].get("incubation_days",26)
+        incubation_days = machine_settings.get("incubation_days",26)
+        #if machine_settings and machine_settings.get("value",False):
+        #    incubation_days = machine_settings["value"].get("incubation_days",26)
         end_date = self.getEndDate(start_date, incubation_days)
 
 
@@ -56,7 +56,10 @@ class Incubation(BxCloudant, Common):
                 },
             ]
 
-            db_ret = self.update_doc_fields(machine_id, to_update_list)
+            db_ret = self.update_doc_fields(incubation_id, to_update_list)
+
+            msg = self.getEpochTime() + "-update_incubation"
+            self.publish_message(msg)
 
             ret = {
                 "status": "ok",
@@ -103,7 +106,7 @@ class Incubation(BxCloudant, Common):
                 "message": "incubation data not found"
             }
         else:
-            doc["start_date"] = "2021-04-15 15:14:34"
+            #doc["start_date"] = "2021-04-15 15:14:34"
             incubation_days = self.getDateDifference(time_now,doc["start_date"])
             incubation_period = self.getDateDifference(doc["end_date"],doc["start_date"])
             incubation_percentage = (float(incubation_days)/float(incubation_period)) * 100

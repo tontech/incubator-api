@@ -18,4 +18,5 @@ urllib3
 idna==2.7
 tinydb==4.3.0
 jsonmodels==2.4.1
+ably
 

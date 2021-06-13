@@ -31,9 +31,9 @@ class BxCloudant:
         else:
             cloudantInfo=appConfig['CLOUDANT']
 
-        client = Cloudant(cloudantInfo['username'], cloudantInfo['password'], url=cloudantInfo['url'], adapter=Replay429Adapter(retries=20, initialBackoff=0.1))
-        client.connect()
-
+        client = Cloudant(cloudantInfo['username'], cloudantInfo['password'], url=cloudantInfo['url'], adapter=Replay429Adapter(retries=20, initialBackoff=0.1),
+            connect=True, auto_renew=True)
+        
         dbInfo = appConfig['DATABASE']
         env = appConfig['ENVIRONMENT']
         mydb = self.getDatabase(dbInfo[env])

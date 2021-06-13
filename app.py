@@ -32,6 +32,11 @@ incubation = incubation.Incubation()
 app.route('/incubation', methods=['POST'])(incubation.startIncubation)
 app.route('/incubation', methods=['GET'])(incubation.getIncubation)
 
+from controllers import report
+report = report.Report()
+app.route('/notifs', methods=['GET'])(report.getNotifications)
+app.route('/reaches', methods=['GET'])(report.getReached)
+app.route('/latest/scan', methods=['GET'])(report.getLatestScan)
 
 port = os.getenv('PORT', '5050')
 if __name__ == "__main__":

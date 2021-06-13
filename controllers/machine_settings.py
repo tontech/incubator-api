@@ -2,8 +2,9 @@ from flask import Flask, jsonify, request
 from models.machine_settings import Settings
 from library.common import Common
 from library.bx_cloudant import BxCloudant
+from library.ably_interface import AblyInterface 
 
-class MachineSettings(Common, BxCloudant):
+class MachineSettings(Common, BxCloudant, AblyInterface):
 
     def create_setting(self):
         params = request.get_json(force=True)
@@ -30,6 +31,9 @@ class MachineSettings(Common, BxCloudant):
         settings_json["_id"] = "machinesettings-"+machine_id
 
         db_ret = self.saveDocument(settings_json)
+
+        msg = self.getEpochTime() + "-update_settings"
+        self.publish_message(msg)
         
         if db_ret.get("_id",False):
             ret = {
@@ -56,8 +60,7 @@ class MachineSettings(Common, BxCloudant):
                     "status": "error",
                     "message": "machine_id not found"
                     })
-        fields = params.get("fields",{})
-
+        machine_id = "machinesettings-"+machine_id
         doc = self.getDocumentById(machine_id)
 
         if (not doc) or ("error" in doc):
@@ -68,7 +71,7 @@ class MachineSettings(Common, BxCloudant):
 
         to_update_list = [{"field": "updated_at", "value": time_now}]
         for key in doc:
-            val = fields.get(key,None)
+            val = params.get(key,None)
             if val != None:
                 to_update_list.append({
                     "field": key,
@@ -78,6 +81,9 @@ class MachineSettings(Common, BxCloudant):
         print("to_update: ",to_update_list)
 
         db_ret = self.update_doc_fields(machine_id, to_update_list)
+        
+        msg = self.getEpochTime() + "-update_settings"
+        self.publish_message(msg)
 
         return self.returnFunction({
             "status": "ok",
@@ -106,19 +112,5 @@ class MachineSettings(Common, BxCloudant):
                 "status": "ok",
                 "settings": doc
                 })
-
-
-                
-                
-
-
-
-
-
-
-
-
-
-
 
 
